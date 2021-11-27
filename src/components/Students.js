@@ -5,14 +5,17 @@ import Student from "./Student";
 
 function Students(props) {
   const [studentData, setStudentData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const { sName, sAge, sDept, sLocation } = useContext(Context);
 
   useEffect(() => {
     let fetchData = async () => {
+      setLoading(true);
       const { data } = await axios.get(
         process.env.REACT_APP_APIENDPOINT + "/students"
       );
+      setLoading(false);
       setStudentData(data);
     };
     fetchData();
@@ -20,15 +23,19 @@ function Students(props) {
 
   return (
     <ul className="students">
-      {studentData.map((d) => (
-        <Student
-          key={d._id}
-          {...d}
-          {...props}
-          studentData={studentData}
-          setStudentData={setStudentData}
-        />
-      ))}
+      {!loading ? (
+        studentData.map((d) => (
+          <Student
+            key={d._id}
+            {...d}
+            {...props}
+            studentData={studentData}
+            setStudentData={setStudentData}
+          />
+        ))
+      ) : (
+        <div className="loading">Loading...</div>
+      )}
     </ul>
   );
 }
