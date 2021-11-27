@@ -78,8 +78,8 @@ function Student({
         </a>
       </div>
       <div>Name: {name}</div>
-      <div>Age: {age}</div>
       <div>Department: {dept}</div>
+      <div>Age: {age}</div>
       <div>Location: {location}</div>
     </li>
   );
